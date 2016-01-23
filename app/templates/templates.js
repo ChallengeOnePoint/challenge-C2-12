@@ -6,7 +6,7 @@ angular.module('templateStore.templates', ['ngRoute'])
       templateUrl: 'templates/templates.html',
       controller: 'TemplatesCtrl'
     })
-    .when('/templates/:templateId', {
+    .when('/templates/:templateName', {
       templateUrl: 'templates/template-details.html',
       controller: 'TemplateDetailsCtrl'
     });
@@ -20,15 +20,15 @@ angular.module('templateStore.templates', ['ngRoute'])
 }])
 
 .controller('TemplateDetailsCtrl', ['$scope', '$routeParams', '$http', '$filter', function($scope, $routeParams, $http, $filter) {
-  var templateId = $routeParams.templateId;
+  var templateName = $routeParams.templateName;
   $http.get('json/kittenIdentity.json').success(function(data) {
     $scope.template = $filter('filter')(data, function(d) {
-      return d.name == templateId;
+      return d.name == templateName;
     })[0];
     $scope.mainImage = $scope.template.picture;
 
     $scope.setImage = function(image){
-      $scope.mainImage = image;
+      $scope.mainImage = image.name;
     }
   });
 
